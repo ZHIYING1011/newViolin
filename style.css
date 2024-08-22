@@ -1,0 +1,43 @@
+:root {
+  --aside-width: 240px;
+  --top-width: 72px;
+  --main-color: #4E73DE;
+  --secondary-color:#7699FF;
+  --tableTitle-color:#F8F9FC;
+  --background-color:#F6F7FA;
+  --table-color:#858796;
+
+  --aside-bg: #2D2116;
+}
+
+.brand {
+  width: var(--aside-width);
+  background: var(--aside-bg);
+  width: 239px;
+  height: var(--top-width);
+}
+
+.left-aside {
+  width: var(--aside-width);
+  padding-top: var(--top-width);
+}
+
+.main-content {
+  margin: var(--top-width) 0 0 var(--aside-width);
+  /* 上右下左 */
+}
+
+body{
+  background: var(--background-color);
+}
+.table-title{
+  background: var(--tableTitle-color);
+}
+.coupon-table{
+  thead tr th{
+      color: var(--table-color);
+  }
+  tbody tr td{
+      color: var(--table-color);
+  }
+}
