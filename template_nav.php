@@ -22,13 +22,17 @@
     background: var(--active-btn);
     border-color: var(--active-btn);
   }
+
+  a {
+    text-decoration: none;
+  }
 </style>
 
 
 <aside class="left-aside border-end vh-100 position-fixed top-0 start-0 overflow-auto">
   <ul class="list-unstyled">
     <li><a class="d-block px-3 py-3 nav-item rounded-0 <?= $cateNum == 0 ? "btn-active" : "" ?>" href="<?= $cateNum == -1 ? "." : ".." ?>/coupon/couponIndex.php"><i class="fa-solid fa-table-cells-large me-2 fa-fw"></i><?= $cate_ary[0] ?></a></li>
-    <li><a class="d-block px-3 py-3 nav-item rounded-0 <?= $cateNum == 1 ? "btn-active" : "" ?>" href="<?= $cateNum == -1 ? "." : ".." ?>/user"><i class="fa-solid fa-user-group me-2 fa-fw"></i><?= $cate_ary[1] ?></a></li>
+    <li><a class="d-block px-3 py-3 nav-item rounded-0 <?= $cateNum == 1 ? "btn-active" : "" ?>" href="<?= $cateNum == -1 ? "." : ".." ?>/user/userIndex.php"><i class="fa-solid fa-user-group me-2 fa-fw"></i><?= $cate_ary[1] ?></a></li>
     <li><a class="d-block px-3 py-3 nav-item rounded-0 <?= $cateNum == 2 ? "btn-active" : "" ?>" href="<?= $cateNum == -1 ? "." : ".." ?>/product"><i class="fa-solid fa-box me-2 fa-fw"></i><?= $cate_ary[2] ?></a></li>
     <li><a class="d-block px-3 py-3 nav-item rounded-0 <?= $cateNum == 3 ? "btn-active" : "" ?>" href="<?= $cateNum == -1 ? "." : ".." ?>/course"><i class="fa-solid fa-chalkboard me-2 fa-fw"></i><?= $cate_ary[3] ?></a></li>
     <li><a class="d-block px-3 py-3 nav-item rounded-0 <?= $cateNum == 4 ? "btn-active" : "" ?>" href="<?= $cateNum == -1 ? "." : ".." ?>/teacher"><i class="fa-solid fa-chalkboard-user me-2 fa-fw"></i><?= $cate_ary[4] ?></a></li>

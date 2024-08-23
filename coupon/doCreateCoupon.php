@@ -27,9 +27,9 @@ if (empty($coupon_name)) {
 $coupon_info = $_POST["coupon_info"];
 $coupon_rewardType = $_POST["coupon_rewardType"];
 $coupon_lowPrice = $_POST["coupon_lowPrice"];
-$coupon_maxUse = $_POST["coupon_maxUse"];
+$coupon_maxUse = $_POST["coupon_maxUse"] ?? -1;
 $coupon_mode = $_POST["coupon_mode"];
-$coupon_amount = $_POST["coupon_amount"];
+$coupon_amount = $_POST["coupon_amount"] ?? -1;
 $coupon_send = $_POST["coupon_send"];
 $coupon_startDate = $_POST["coupon_startDate"];
 $coupon_endDate = $_POST["coupon_endDate"];
