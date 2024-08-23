@@ -1,0 +1,78 @@
+<template>
+    <style>
+        .modal-background {
+            background: white;
+        }
+    </style>
+    <div class="modal-background">
+        <div
+            id="diologShowTemp"
+            class="row g-2"
+        >
+
+        </div>
+    </div>
+
+</template>
+<script>
+    let sendInt = {
+        1: "全員發送",
+        2: "生日",
+        3: "等級",
+    };
+    let rewardTypeInt = {
+        1: "百分比",
+        2: "金額",
+    };
+    let stateInt = {
+        1: "啟用",
+        2: "停用",
+        3: "已失效",
+    };
+    let modeInt = {
+        1: "皆可使用",
+        2: "指定商品可使用",
+        3: "指定商品不可使用",
+    };
+    rendering()
+    let info = {}
+    function CRDOM(Name, value, size = 6) {
+        let newMainDiv = document.createElement("div");
+        newMainDiv.classList.add("col-" + size)
+        newMainDiv.classList.add("form-floating")
+        newMainDiv.classList.add("pb-3")
+
+        let newInput = document.createElement("input");
+        newInput.classList.add("form-control")
+        newInput.disabled = true
+        newInput.readOnly = true
+        newInput.value = value
+
+        let newLab = document.createElement("label");
+        newLab.innerHTML = Name;
+        newMainDiv.appendChild(newInput)
+        newMainDiv.appendChild(newLab)
+
+        return newMainDiv
+    }
+    export function setIdInfo(i) {
+        console.log(i)
+        let newtr = document.getElementById("diologShowTemp")
+        newtr.innerHTML = '';
+        newtr.appendChild(CRDOM("優惠券序號", i.coupon_sid));
+        newtr.appendChild(CRDOM("優惠券名稱", i.coupon_name));
+        newtr.appendChild(CRDOM("優惠券說明", i.coupon_info, 12));
+        newtr.appendChild(CRDOM("發放方式", sendInt[i.coupon_send]));
+        newtr.appendChild(CRDOM("發放門檻(最低消費)", i.coupon_lowPrice));
+        newtr.appendChild(CRDOM("折抵類別", rewardTypeInt[i.coupon_rewardType]));
+        newtr.appendChild(CRDOM("活動併用方式", modeInt[i.coupon_mode]));
+        // newtr.appendChild(CRDOM("綁定商品標籤", ));
+        newtr.appendChild(CRDOM("有效開始時間", i.coupon_startDate));
+        newtr.appendChild(CRDOM("有效結束時間", i.coupon_endDate));
+        let amount = i.coupon_amount == -1 ? "無上限" : i.coupon_amount
+        newtr.appendChild(CRDOM("發放數量", amount));
+        let maxUse = i.coupon_maxUse == -1 ? "無上限" : i.coupon_maxUse
+        newtr.appendChild(CRDOM("使用次數上限", maxUse));
+        newtr.appendChild(CRDOM("優惠券狀態", stateInt[i.coupon_state]));
+    }
+</script>

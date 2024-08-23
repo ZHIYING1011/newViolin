@@ -36,12 +36,6 @@ require_once("../db_connect.php");
                 </div>
                 <div class="py-2">
                     <form action="doCreateCoupon.php" method="post">
-                        <!-- <?php
-                                $today = date('Y-m-d');
-                                $start = isset($_GET["coupon_startDate"]) ? $_GET["coupon_startDate"] :
-                                    $today;
-                                $end = isset($_GET["coupon_endDate"]) ? $_GET["coupon_endDate"] : $today;
-                                ?> -->
                         <div class="row g-2">
                             <div class="col-6 form-floating pb-3">
                                 <input class="form-control" id="coupon_sid" placeholder="coupon_sid" name="coupon_sid">
@@ -51,11 +45,11 @@ require_once("../db_connect.php");
                             <!-- <code id="serial"></code>
                             <button id="generate" onclick="generateSerial()">Generate Serial Number</button> -->
                             <div class="col-6 form-floating pb-3">
-                                <input type="coupon_name" class="form-control" id="coupon_name" placeholder="coupon_name" name="coupon_name">
+                                <input class="form-control" id="coupon_name" placeholder="coupon_name" name="coupon_name">
                                 <label for="coupon_name"><span class="text-danger">*</span>優惠券名稱</label>
                             </div>
                             <div class="col-12 form-floating pb-3">
-                                <input type="coupon_info" class="form-control" id="coupon_info" placeholder="coupon_info" name="coupon_info">
+                                <input class="form-control" id="coupon_info" placeholder="coupon_info" name="coupon_info">
                                 <label for="coupon_info"><span class="text-danger">*</span>優惠券說明</label>
                             </div>
                             <div class="col-6 form-floating pb-3">
@@ -77,10 +71,10 @@ require_once("../db_connect.php");
                                 </select>
                                 <label for="coupon_rewardType"><span class="text-danger">*</span>折抵類別</label>
                             </div>
-                            <!-- <div class="col-6 form-floating pb-3">
-                            <input type="couponRewardType" class="form-control" id="couponRewardType" placeholder="couponRewardType" name="couponRewardType">
-                            <label for="couponRewardType"><span class="text-danger">*</span>折抵</label>
-                        </div> -->
+                            <div class="col-6 form-floating pb-3">
+                                <input type="couponRewardType" class="form-control" id="couponRewardType" placeholder="couponRewardType" name="couponRewardType">
+                                <label for="couponRewardType"><span class="text-danger">*</span>折抵</label>
+                            </div>
                             <div class="col-6 form-floating pb-3">
                                 <select class="form-select" id="coupon_mode" placeholder="coupon_mode" name="coupon_mode">
                                     <option value="1">皆可使用</option>
@@ -96,11 +90,11 @@ require_once("../db_connect.php");
                                 <label for="product_id">綁定商品標籤</label>
                             </div>
                             <div class="col-6 form-floating pb-3">
-                                <input type="date" class="form-control" name="coupon_startDate" value="<?= $coupon_startDate ?>" id="coupon_startDate">
+                                <input type="date" class="form-control" name="coupon_startDate" value="" id="coupon_startDate">
                                 <label for="coupon_startDate">有效開始日期</label>
                             </div>
                             <div class="col-6 form-floating pb-3">
-                                <input type="date" class="form-control" name="coupon_endDate" value="<?= $coupon_endDate ?>" id="coupon_endDate">
+                                <input type="date" class="form-control" name="coupon_endDate" value="" id="coupon_endDate">
                                 <label for="coupon_endDate">有效結束日期</label>
                             </div>
                             <div class="col-6  d-flex gap-2 align-items-center pb-3">
@@ -129,7 +123,7 @@ require_once("../db_connect.php");
                             </div>
                             <div class="col-6  d-flex gap-2 align-items-center pb-3">
                                 <div class="form-floating col-10">
-                                    <input type="date" class="form-control" name="coupon_specifyDate" value="<?= $coupon_specifyDate ?>" id="coupon_specifyDate">
+                                    <input type="date" class="form-control" name="coupon_specifyDate" value="" id="coupon_specifyDate">
                                     <label for="coupon_specifyDate">自動發送時間</label>
                                 </div>
                                 <div class="form-check col-2">
@@ -138,6 +132,13 @@ require_once("../db_connect.php");
                                         即刻送
                                     </label>
                                 </div>
+                            </div>
+                            <div class="col-6 form-floating pb-3" hidden>
+                                <select class="form-select" id="coupon_state" placeholder="coupon_state" name="coupon_state">
+                                    <option value="1">啟用</option>
+                                    <option value="2">停用</option>
+                                </select>
+                                <label for="coupon_state">優惠券狀態</label>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center pt-3">
@@ -179,11 +180,32 @@ require_once("../db_connect.php");
                 //     // 将生成的序号填入 input 框中
                 //     document.getElementById('coupon_sid').value = randomSerial;
                 // }
+                Date.prototype.format = function(fmt) {
+                    var o = {
+                        "M+": this.getMonth() + 1,
+                        "d+": this.getDate(),
+                        "h+": this.getHours(),
+                        "m+": this.getMinutes(),
+                        "s+": this.getSeconds(),
+                        "q+": Math.floor((this.getMonth() + 3) / 3),
+                        "S": this.getMilliseconds()
+                    };
+                    if (/(y+)/.test(fmt)) {
+                        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                    }
+                    for (var k in o) {
+                        if (new RegExp("(" + k + ")").test(fmt)) {
+                            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                        }
+                    }
+                    return fmt;
+                }
+
 
                 //發放數量
                 unlimitedCheckbox.addEventListener('change', function() {
                     if (this.checked) {
-                        coupon_amount.value = '-1';
+                        coupon_amount.value = '無上限';
                         coupon_amount.disabled = true;
                         coupon_amount.classList.add('unlimited-input');
                     } else {
@@ -195,7 +217,7 @@ require_once("../db_connect.php");
                 //使用次數上限
                 unlimitedUseCheckbox.addEventListener('change', function() {
                     if (this.checked) {
-                        coupon_maxUse.value = '-1';
+                        coupon_maxUse.value = '無上限';
                         coupon_maxUse.disabled = true;
                         coupon_maxUse.classList.add('unlimitedUse-input');
                     } else {
@@ -207,12 +229,13 @@ require_once("../db_connect.php");
                 //指定時間
                 couponSpecifyDateCheckbox.addEventListener('change', function() {
                     if (this.checked) {
-                        coupon_specifyDate.value = '-1';
-                        coupon_specifyDate.disabled = true;
+                        coupon_specifyDate.value = new Date().format("yyyy-MM-dd");
+                        console.log(coupon_specifyDate.value)
+                        coupon_specifyDate.readOnly = true;
                         coupon_specifyDate.classList.add('specifyDate-input');
                     } else {
                         coupon_specifyDate.value = '';
-                        coupon_specifyDate.disabled = false;
+                        coupon_specifyDate.readOnly = false;
                         coupon_specifyDate.classList.remove('specifyDate-input');
                     }
                 });

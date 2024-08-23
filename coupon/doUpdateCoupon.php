@@ -3,21 +3,22 @@ require_once("../db_connect.php");
 
 // $coupon_sid = $_POST["coupon_sid"];
 // $coupon_name = $_POST["coupon_name"];
+
 $id = $_POST["id"];
 $coupon_info = $_POST["coupon_info"];
 $coupon_rewardType = $_POST["coupon_rewardType"];
 $coupon_lowPrice = $_POST["coupon_lowPrice"];
-$coupon_maxUse = $_POST["coupon_maxUse"];
+$coupon_maxUse = $_POST["coupon_maxUse"]  ?? -1;
 $coupon_mode = $_POST["coupon_mode"];
-$coupon_amount = $_POST["coupon_amount"];
+$coupon_amount = $_POST["coupon_amount"] ?? -1;
 $coupon_send = $_POST["coupon_send"];
 $coupon_startDate = $_POST["coupon_startDate"];
 $coupon_endDate = $_POST["coupon_endDate"];
 $product_id = $_POST["product_id"];
 $coupon_specifyDate = $_POST["coupon_specifyDate"];
+$coupon_state = $_POST["coupon_state"];
 
 $sql = "UPDATE coupon SET
-
 coupon_info='$coupon_info', 
 coupon_rewardType='$coupon_rewardType', 
 coupon_lowPrice='$coupon_lowPrice', 
@@ -29,7 +30,11 @@ coupon_startDate='$coupon_startDate',
 coupon_endDate='$coupon_endDate', 
 product_id='$product_id', 
 coupon_specifyDate='$coupon_specifyDate'
+coupon_state='$coupon_state'
 WHERE id=$id";
+
+
+
 
 echo $sql;
 

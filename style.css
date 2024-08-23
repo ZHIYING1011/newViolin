@@ -1,12 +1,9 @@
 :root {
   --aside-width: 240px;
   --top-width: 72px;
-  --main-color: #4E73DE;
-  --secondary-color:#7699FF;
   --tableTitle-color:#F8F9FC;
   --background-color:#F6F7FA;
   --table-color:#858796;
-
   --aside-bg: #2D2116;
 }
 
@@ -41,3 +38,4 @@ body{
       color: var(--table-color);
   }
 }
+
