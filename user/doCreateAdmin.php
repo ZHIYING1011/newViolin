@@ -36,7 +36,7 @@ $password = md5($password);
 
 // 插入資料庫
 $sql = "INSERT INTO `users`(`user_name`, `type_id`, `level_id`, `account`, `password`, `phone`, `email`, `birthday`, `gender`, `address_city_id`, `address_cityarea_id`, `address_street`, `create_date`, `valid`) 
-        VALUES ('$user_name', 1, 3, '$account', '$password', '$phone', '$email', '$birthday', '$gender', '$address_city_id', '$address_cityarea_id', '$address_street', '$create_date', 1)";
+        VALUES ('$user_name', 1, 3, '$account', '$password', '$phone', '$email', '$birthday', '$gender', '$address_city_id', '$address_cityarea_id', '$address_street', '$create_date', Y)";
 
 if ($conn->query($sql) === TRUE) {
     echo json_encode(["status" => 1, "message" => "帳號新增成功"]);

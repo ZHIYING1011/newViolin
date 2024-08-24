@@ -158,7 +158,7 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
                 // 格式驗證與表單提交處理
                 document.querySelector('form').addEventListener('submit', function(e) {
                     e.preventDefault(); // 阻止表單的默認提交行為
-                    
+
                     // 名稱驗證
                     var userName = document.getElementById('user_name').value;
                     if (!/^[\u4e00-\u9fa5]{1,5}$/.test(userName)) {
@@ -259,7 +259,7 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="errorModalLabel">錯誤</h5>
+                    <h5 class="modal-title" id="errorModalLabel">請確認</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalMessage">

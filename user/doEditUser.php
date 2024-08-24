@@ -16,7 +16,7 @@ $gender = isset($_POST["gender"]) ? intval($_POST["gender"]) : null;
 $address_city_id = intval($_POST["address_city_id"]);
 $address_cityarea_id = intval($_POST["address_cityarea_id"]);
 $address_street = $conn->real_escape_string($_POST["address_street"]);
-$valid = isset($_POST["valid"]) ? intval($_POST["valid"]) : null;
+$valid = isset($_POST["valid"]) ? ($_POST["valid"]) : null;
 $update_time = date('Y-m-d H:i:s');
 
 // 密碼更新

@@ -7,8 +7,8 @@ if (isset($_SESSION["user"])) {
 }
 
 if (isset($_SESSION["error"]["times"]) && $_SESSION["error"]["times"] > 5) {
-    // 設置15秒的倒計時
-    $countdown = 5;
+    // 倒計時秒數
+    $countdown = 10;
 }
 
 ?>

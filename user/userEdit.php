@@ -74,11 +74,11 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
                 $valid_class = '';
                 $valid_content = '';
                 switch ($user["valid"]) {
-                    case '0':
+                    case 'N':
                         $valid_class = 'bg-danger';
                         $valid_content = '已停用';
                         break;
-                    case '1':
+                    case 'Y':
                         $valid_class = 'bg-success';
                         $valid_content = '啟用中';
                         break;
@@ -100,20 +100,7 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
                                     <label for="user_name" class="form-label">使用者名稱<span class="text-danger">(必填)</span></label>
                                 </div>
 
-                                <!-- 性別 -->
-                                <div class="col-6 pb-3">
-                                    <label for="gender" class="form-label">性別</label>
-                                    <div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" <?= $user['gender'] == 1 ? 'checked' : '' ?>>
-                                            <label class="form-check-label" for="inlineRadio1">男</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="2" <?= $user['gender'] == 2 ? 'checked' : '' ?>>
-                                            <label class="form-check-label" for="inlineRadio2">女</label>
-                                        </div>
-                                    </div>
-                                </div>
+
 
                                 <!-- 使用者帳號 -->
                                 <div class="col-6 pb-3">
@@ -130,7 +117,21 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
                                 <div class="col-6 form-floating pb-3">
                                     <input type="password" class="form-control" name="confirm_password" placeholder="請再次輸入使用者密碼">
                                     <label for="confirm_password" class="form-label">再次輸入使用者密碼<span class="text-danger"> 不須變更時保持空白即可!</span></label>
+                                </div>
 
+                                <!-- 性別 -->
+                                <div class="col-6 pb-3">
+                                    <label for="gender" class="form-label">性別</label>
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" <?= $user['gender'] == 1 ? 'checked' : '' ?>>
+                                            <label class="form-check-label" for="inlineRadio1">男</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="2" <?= $user['gender'] == 2 ? 'checked' : '' ?>>
+                                            <label class="form-check-label" for="inlineRadio2">女</label>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- 使用者電話 -->
@@ -209,17 +210,15 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
                     <div class="col-6 pb-3">
                         <div class="d-flex">
                             <label for="valid" class="form-label">帳號狀態</label>
-
                         </div>
-
                         <div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="valid" id="inlineRadio1" value="1" <?= $user['valid'] == 1 ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="inlineRadio1">啟用</label>
+                                <input class="form-check-input" type="radio" name="valid" id="inlineRadio3" value="Y" <?= $user['valid'] == 'Y' ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="inlineRadio3">啟用</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="valid" id="inlineRadio2" value="0" <?= $user['valid'] == 0 ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="inlineRadio2">停用</label>
+                                <input class="form-check-input" type="radio" name="valid" id="inlineRadio4" value="N" <?= $user['valid'] == 'N' ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="inlineRadio4">停用</label>
                             </div>
                         </div>
                     </div>

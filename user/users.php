@@ -20,12 +20,9 @@ require_once("../db_connect.php");
 // 頁面基礎 SQL
 $sql = "SELECT users.*, address_city.address_city_name, address_cityarea.address_cityarea_name,user_level.level_name,user_type.type_name
     FROM users
-    -- JOIN 地址資料
     LEFT JOIN address_city ON users.address_city_id = address_city.address_city_id
     LEFT JOIN address_cityarea ON users.address_cityarea_id = address_cityarea.address_cityarea_id
-    -- JOIN 使用者等級
     LEFT JOIN user_level ON users.level_id = user_level.level_id
-    -- JOIN 使用者類型
     LEFT JOIN user_type ON users.type_id = user_type.type_id
     WHERE is_delete=0";
 
@@ -97,7 +94,7 @@ if (isset($_GET["type_name"]) && !empty(trim($_GET["type_name"]))) {
 }
 
 // 帳號狀態
-if (isset($_GET["valid"])) {
+if (isset($_GET["valid"]) && !empty(trim($_GET["valid"]))) {
     $valid = trim($_GET["valid"]);
     $conditions[] = "users.valid = '$valid'";
 }
@@ -160,12 +157,9 @@ if (count($conditions) > 0) {
     $sqlCount = "
         SELECT COUNT(*) as total 
         FROM users
-        -- JOIN 地址資料
         LEFT JOIN address_city ON users.address_city_id = address_city.address_city_id
         LEFT JOIN address_cityarea ON users.address_cityarea_id = address_cityarea.address_cityarea_id
-        -- JOIN 使用者等級
         LEFT JOIN user_level ON users.level_id = user_level.level_id
-        -- JOIN 使用者類型
         LEFT JOIN user_type ON users.type_id = user_type.type_id
         WHERE is_delete=0 AND " . implode(" AND ", $conditions);
 
@@ -186,6 +180,7 @@ if (count($conditions) > 0) {
     $total_page = ceil($userCount / $per_page);
 }
 
+// echo $sql; // 調試用，確認 SQL 查詢是否正確
 
 ?>
 <!doctype html>
@@ -245,47 +240,52 @@ if (count($conditions) > 0) {
                             <label class="form-label">關鍵字</label>
                         </div>
 
+                        <!-- 使用者等級 -->
                         <div class="col my-3">
                             <p class="form-label">使用者等級</p>
                             <div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="level_name" id="inlineRadio1" value="金" <?php echo (isset($_GET['level_name']) && $_GET['level_name'] == '金') ? 'checked' : ''; ?>>
+                                    <input class="form-check-input" type="radio" name="level_name" id="inlineRadio1" value="金" <?php echo (isset($_GET['level_name']) && $_GET['level_name'] === '金') ? 'checked' : ''; ?>>
                                     <label class="form-check-label" for="inlineRadio1">金</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="level_name" id="inlineRadio2" value="銀" <?php echo (isset($_GET['level_name']) && $_GET['level_name'] == '銀') ? 'checked' : ''; ?>>
+                                    <input class="form-check-input" type="radio" name="level_name" id="inlineRadio2" value="銀" <?php echo (isset($_GET['level_name']) && $_GET['level_name'] === '銀') ? 'checked' : ''; ?>>
                                     <label class="form-check-label" for="inlineRadio2">銀</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="level_name" id="inlineRadio3" value="銅" <?php echo (isset($_GET['level_name']) && $_GET['level_name'] == '銅') ? 'checked' : ''; ?>>
+                                    <input class="form-check-input" type="radio" name="level_name" id="inlineRadio3" value="銅" <?php echo (isset($_GET['level_name']) && $_GET['level_name'] === '%銅%') ? 'checked' : ''; ?>>
                                     <label class="form-check-label" for="inlineRadio3">銅</label>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- 使用者類別 -->
                         <div class="col my-3">
                             <p class="form-label">使用者類別</p>
                             <div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="type_name" id="inlineRadio4" value="系統管理員" <?php echo (isset($_GET['type_name']) && $_GET['type_name'] == '系統管理員') ? 'checked' : ''; ?>>
+                                    <input class="form-check-input" type="radio" name="type_name" id="inlineRadio4" value="系統管理員"
+                                        <?php if (isset($_GET['type_name']) && $_GET['type_name'] === '系統管理員') echo 'checked'; ?>>
                                     <label class="form-check-label" for="inlineRadio4">系統管理員</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="type_name" id="inlineRadio5" value="一般會員" <?php echo (isset($_GET['type_name']) && $_GET['type_name'] == '一般會員') ? 'checked' : ''; ?>>
+                                    <input class="form-check-input" type="radio" name="type_name" id="inlineRadio5" value="一般會員"
+                                        <?php if (isset($_GET['type_name']) && $_GET['type_name'] === '一般會員') echo 'checked'; ?>>
                                     <label class="form-check-label" for="inlineRadio5">一般會員</label>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- 帳號狀態 -->
                         <div class="col my-3">
                             <p class="form-label">帳號狀態</p>
                             <div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="valid" id="inlineRadio6" value="1" <?php echo (isset($_GET['valid']) && $_GET['valid'] == '1') ? 'checked' : ''; ?>>
+                                    <input class="form-check-input" type="radio" name="valid" id="inlineRadio6" value="Y" <?php if (isset($_GET['valid']) && $_GET['valid'] == '1') echo 'checked'; ?>>
                                     <label class="form-check-label" for="inlineRadio6">啟用</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="valid" id="inlineRadio7" value="0" <?php echo (isset($_GET['valid']) && $_GET['valid'] == '0') ? 'checked' : ''; ?>>
+                                    <input class="form-check-input" type="radio" name="valid" id="inlineRadio7" value="N" <?php if (isset($_GET['valid']) && $_GET['valid'] == '0') echo 'checked'; ?>>
                                     <label class="form-check-label" for="inlineRadio7">停用</label>
                                 </div>
                             </div>
@@ -295,6 +295,7 @@ if (count($conditions) > 0) {
                         <div class="align-self-center">
                             <button type="submit" class="btn btn-primary">搜尋</button>
                             <a href="users.php" class="btn btn-dark">清除</a>
+
                         </div>
                     </form>
                 </div>
@@ -452,12 +453,12 @@ if (count($conditions) > 0) {
                                         $valid_class = '';
                                         $valid_content = '';
                                         switch ($user["valid"]) {
-                                            case '0':
+                                            case 'N':
                                                 $valid_class = 'badge bg-danger';
                                                 $valid_content = '停用';
                                                 // 停用
                                                 break;
-                                            case '1':
+                                            case 'Y':
                                                 $valid_class = 'badge bg-success';
                                                 $valid_content = '啟用';
                                                 // 啟用
@@ -473,6 +474,8 @@ if (count($conditions) > 0) {
                                         <td><?= $user["account"] ?></td>
                                         <td><?= "0" . $user["phone"] ?></td>
                                         <td><?= $user["email"] ?></td>
+
+                                        <!-- 地址 -->
                                         <?php
                                         // 組合完整的地址
                                         $city_name = isset($user["address_city_name"]) ? $user["address_city_name"] : '尚未設定';
@@ -481,17 +484,42 @@ if (count($conditions) > 0) {
                                         $address = $city_name . $area_name . $street;
                                         ?>
                                         <td><?= $address ?></td>
+
+                                        <!-- 功能項目 -->
                                         <td class="d-flex justify-content-evenly">
-                                            <a class="text-dark" href="userView.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-eye"></i></a>
+                                            <a class="text-dark view-user-btn" href="#" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-id="<?= $user["id"] ?>">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
                                             <a class="text-dark" href="userEdit.php?id=<?= $user["id"] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                                             <a class="text-dark" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?= $user["id"] ?>" data-name="<?= $user["user_name"] ?>" data-account="<?= $user["account"] ?>"><i class="fa-solid fa-trash-can"></i></a>
                                         </td>
+
 
                                 </tr>
                             <?php endforeach; ?>
 
                             </tbody>
                         </table>
+
+                        <!-- 檢視視窗 -->
+                        <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="viewUserModalLabel">使用者管理/檢視</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- 這裡將動態載入 userView.php 的內容 -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <!-- 刪除確認視窗 -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -518,21 +546,20 @@ if (count($conditions) > 0) {
                                     <?php for ($i = 1; $i <= $total_page; $i++) : ?>
                                         <li class="page-item <?php if ($page == $i) echo "active" ?>">
                                             <a class="page-link" href="users.php?p=<?= $i ?>&order=<?= $order ?>
-                        &search_name=<?= urlencode($_GET['search_name'] ?? '') ?>
-                        &search_account=<?= urlencode($_GET['search_account'] ?? '') ?>
-                        &search_column_name=<?= urlencode($_GET['search_column_name'] ?? '') ?>
-                        &search_column=<?= urlencode($_GET['search_column'] ?? '') ?>
-                        &level_name=<?= urlencode($_GET['level_name'] ?? '') ?>
-                        &type_name=<?= urlencode($_GET['type_name'] ?? '') ?>
-                        &valid=<?= urlencode($_GET['valid'] ?? '') ?>">
+            &search_name=<?= urlencode($_GET['search_name'] ?? '') ?>
+            &search_account=<?= urlencode($_GET['search_account'] ?? '') ?>
+            &search_column_name=<?= urlencode($_GET['search_column_name'] ?? '') ?>
+            &search_column=<?= urlencode($_GET['search_column'] ?? '') ?>
+            &level_name=<?= urlencode($_GET['level_name'] ?? '') ?>
+            &type_name=<?= urlencode($_GET['type_name'] ?? '') ?>
+            &valid=<?= urlencode($_GET['valid'] ?? '') ?>">
                                                 <?= $i ?>
                                             </a>
                                         </li>
                                     <?php endfor ?>
                                 </ul>
                             </nav>
-                        <?php endif ?>
-
+                        <?php endif; ?>
                     <?php else : ?>
                         <p>無相符使用者資料</p>
                     <?php endif; ?>
@@ -542,6 +569,25 @@ if (count($conditions) > 0) {
 
     </main>
 
+    <script>
+        document.querySelectorAll('.view-user-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                var userId = this.getAttribute('data-id');
+
+                // 發送 AJAX 請求獲取 userView.php 的內容
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'userView.php?id=' + userId, true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        document.querySelector('#viewUserModal .modal-body').innerHTML = xhr.responseText;
+                    } else {
+                        document.querySelector('#viewUserModal .modal-body').innerHTML = '<p class="text-danger">無法加載內容，請重試。</p>';
+                    }
+                };
+                xhr.send();
+            });
+        });
+    </script>
 
     <script>
         var deleteUser = '';
