@@ -87,13 +87,19 @@ if (isset($_GET["search_column_name"]) && isset($_GET["search_column"]) && !empt
 // 使用者等級
 if (isset($_GET["level_name"]) && !empty(trim($_GET["level_name"]))) {
     $level_name = trim($_GET["level_name"]);
-    $conditions[] = "user_level.level_name = '$level_name'";
+    $conditions[] = "user_level.level_name LIKE '$level_name'";
 }
 
 // 使用者類別
 if (isset($_GET["type_name"]) && !empty(trim($_GET["type_name"]))) {
     $type_name = trim($_GET["type_name"]);
     $conditions[] = "user_type.type_name = '$type_name'";
+}
+
+// 帳號狀態
+if (isset($_GET["valid"])) {
+    $valid = trim($_GET["valid"]);
+    $conditions[] = "users.valid = '$valid'";
 }
 
 // 將搜尋條件加到 SQL 查詢中
@@ -154,9 +160,12 @@ if (count($conditions) > 0) {
     $sqlCount = "
         SELECT COUNT(*) as total 
         FROM users
+        -- JOIN 地址資料
         LEFT JOIN address_city ON users.address_city_id = address_city.address_city_id
         LEFT JOIN address_cityarea ON users.address_cityarea_id = address_cityarea.address_cityarea_id
+        -- JOIN 使用者等級
         LEFT JOIN user_level ON users.level_id = user_level.level_id
+        -- JOIN 使用者類型
         LEFT JOIN user_type ON users.type_id = user_type.type_id
         WHERE is_delete=0 AND " . implode(" AND ", $conditions);
 
@@ -176,6 +185,7 @@ if (count($conditions) > 0) {
     $userCount = $userCount;
     $total_page = ceil($userCount / $per_page);
 }
+
 
 ?>
 <!doctype html>
@@ -236,7 +246,7 @@ if (count($conditions) > 0) {
                         </div>
 
                         <div class="col my-3">
-                            <label for="level_name" class="form-label">使用者等級</label>
+                            <p class="form-label">使用者等級</p>
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="level_name" id="inlineRadio1" value="金" <?php echo (isset($_GET['level_name']) && $_GET['level_name'] == '金') ? 'checked' : ''; ?>>
@@ -254,7 +264,7 @@ if (count($conditions) > 0) {
                         </div>
 
                         <div class="col my-3">
-                            <label for="type_name" class="form-label">使用者類別</label>
+                            <p class="form-label">使用者類別</p>
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="type_name" id="inlineRadio4" value="系統管理員" <?php echo (isset($_GET['type_name']) && $_GET['type_name'] == '系統管理員') ? 'checked' : ''; ?>>
@@ -263,6 +273,20 @@ if (count($conditions) > 0) {
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="type_name" id="inlineRadio5" value="一般會員" <?php echo (isset($_GET['type_name']) && $_GET['type_name'] == '一般會員') ? 'checked' : ''; ?>>
                                     <label class="form-check-label" for="inlineRadio5">一般會員</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col my-3">
+                            <p class="form-label">帳號狀態</p>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="valid" id="inlineRadio6" value="1" <?php echo (isset($_GET['valid']) && $_GET['valid'] == '1') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="inlineRadio6">啟用</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="valid" id="inlineRadio7" value="0" <?php echo (isset($_GET['valid']) && $_GET['valid'] == '0') ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="inlineRadio7">停用</label>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +315,9 @@ if (count($conditions) > 0) {
                             <thead>
                                 <tr>
                                     <th>編號</th>
+                                    <th>使用者類別</th>
                                     <th>使用者等級</th>
+                                    <th>帳號狀態</th>
                                     <th>使用者名稱
                                         <div class="btn-group">
                                             <a
@@ -392,6 +418,20 @@ if (count($conditions) > 0) {
                                     <?php foreach ($rows as $user) : ?>
                                         <td><?= $index++ ?></td>
                                         <?php
+                                        $type_class = '';
+                                        switch ($user["type_name"]) {
+                                            case '系統管理員':
+                                                $type_class = 'badge bg-warning';  // 系統管理員
+                                                break;
+                                            case '一般會員':
+                                                $type_class = 'badge bg-secondary';  // 一般會員
+                                                break;
+                                            default:
+                                                $type_class = 'badge bg-dark';  // 黑
+                                        }
+                                        ?>
+                                        <td><span class="<?= $type_class ?>"><?= $user["type_name"] ?></span></td>
+                                        <?php
                                         $level_class = '';
                                         switch ($user["level_name"]) {
                                             case '金':
@@ -408,6 +448,27 @@ if (count($conditions) > 0) {
                                         }
                                         ?>
                                         <td><span class="<?= $level_class ?>"><?= $user["level_name"] ?></span></td>
+                                        <?php
+                                        $valid_class = '';
+                                        $valid_content = '';
+                                        switch ($user["valid"]) {
+                                            case '0':
+                                                $valid_class = 'badge bg-danger';
+                                                $valid_content = '停用';
+                                                // 停用
+                                                break;
+                                            case '1':
+                                                $valid_class = 'badge bg-success';
+                                                $valid_content = '啟用';
+                                                // 啟用
+                                                break;
+                                            default:
+                                                $valid_class = 'badge bg-dark';
+                                                $valid_content = '尚未設定';
+                                                // 黑
+                                        }
+                                        ?>
+                                        <td><span class="<?= $valid_class ?>"><?= $valid_content ?></span></td>
                                         <td><?= $user["user_name"] ?></td>
                                         <td><?= $user["account"] ?></td>
                                         <td><?= "0" . $user["phone"] ?></td>
@@ -461,7 +522,9 @@ if (count($conditions) > 0) {
                         &search_account=<?= urlencode($_GET['search_account'] ?? '') ?>
                         &search_column_name=<?= urlencode($_GET['search_column_name'] ?? '') ?>
                         &search_column=<?= urlencode($_GET['search_column'] ?? '') ?>
-                        &level_name=<?= urlencode($_GET['level_name'] ?? '') ?>">
+                        &level_name=<?= urlencode($_GET['level_name'] ?? '') ?>
+                        &type_name=<?= urlencode($_GET['type_name'] ?? '') ?>
+                        &valid=<?= urlencode($_GET['valid'] ?? '') ?>">
                                                 <?= $i ?>
                                             </a>
                                         </li>
@@ -469,6 +532,7 @@ if (count($conditions) > 0) {
                                 </ul>
                             </nav>
                         <?php endif ?>
+
                     <?php else : ?>
                         <p>無相符使用者資料</p>
                     <?php endif; ?>

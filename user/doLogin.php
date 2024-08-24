@@ -43,7 +43,7 @@ require_once("../db_connect.php");
 
 $password = md5($password);
 
-$sql = "SELECT * FROM users WHERE account = '$account' AND password = '$password'";
+$sql = "SELECT * FROM users WHERE account = '$account' AND password = '$password' AND valid = 1";
 $result = $conn->query($sql);
 $userCount = $result->num_rows;
 
@@ -72,7 +72,13 @@ if ($userCount == 1) {
     $acceptErrorTimes = 5;
     $remainErrorTimes = $acceptErrorTimes - $errorTimes;
 
-    $_SESSION["error"]["message"] = "帳號或密碼錯誤，還有 $remainErrorTimes 次機會";
+    $statusCheckSql = "SELECT * FROM users WHERE account = '$account' AND valid = 0";
+    $statusResult = $conn->query($statusCheckSql);
+    if ($statusResult->num_rows == 1) {
+        $_SESSION["error"]["message"] = "帳號已被停用，請聯絡管理員";
+    } else {
+        $_SESSION["error"]["message"] = "帳號或密碼錯誤，還有 $remainErrorTimes 次機會";
+    }
 
     header("location:adminLogin.php");
     exit;
