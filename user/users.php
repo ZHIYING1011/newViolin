@@ -106,7 +106,7 @@ $order = isset($_GET["order"]) ? intval($_GET["order"]) : 1;
 
 switch ($order) {
     case 1:
-        $sql .= " ORDER BY id ASC";
+        $sql .= " ORDER BY id DESC";
         break;
     case 2:
         $sql .= " ORDER BY user_name ASC";

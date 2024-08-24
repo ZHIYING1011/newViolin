@@ -15,26 +15,26 @@ $captcha = $_POST["captcha"];
 // 檢查是否有未填寫的欄位
 if (empty($account)) {
     $_SESSION["error"]["message"] = "請輸入帳號";
-    header("location:userLogin.php");
+    header("location:adminLogin.php");
     exit;
 }
 
 if (empty($password)) {
     $_SESSION["error"]["message"] = "請輸入密碼";
-    header("location:userLogin.php");
+    header("location:adminLogin.php");
     exit;
 }
 
 if (empty($captcha)) {
     $_SESSION["error"]["message"] = "請輸入驗證碼";
-    header("location:userLogin.php");
+    header("location:adminLogin.php");
     exit;
 }
 
-// 驗證碼內容驗證
+// // 驗證碼內容驗證
 if ($captcha !== $_SESSION['captcha']) {
     $_SESSION["error"]["message"] = "驗證碼錯誤";
-    header("location:userLogin.php");
+    header("location:adminLogin.php");
     exit;
 }
 
@@ -74,6 +74,6 @@ if ($userCount == 1) {
 
     $_SESSION["error"]["message"] = "帳號或密碼錯誤，還有 $remainErrorTimes 次機會";
 
-    header("location:userLogin.php");
+    header("location:adminLogin.php");
     exit;
 }

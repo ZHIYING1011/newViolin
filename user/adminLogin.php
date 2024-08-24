@@ -6,6 +6,11 @@ if (isset($_SESSION["user"])) {
     exit;
 };
 
+if (isset($_SESSION["error"]["times"]) && $_SESSION["error"]["times"] > 5) {
+    // 設置15秒的倒計時
+    $countdown = 5;
+};
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,9 +54,24 @@ if (isset($_SESSION["user"])) {
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="sign-in-panel">
 
-            <!-- 錯誤次數 -->
+            <!-- 錯誤次數太多時顯示倒計時 -->
             <?php if (isset($_SESSION["error"]["times"]) && $_SESSION["error"]["times"] > 5) : ?>
                 <h1>錯誤次數太多，請稍後再嘗試</h1>
+                <p class="text-white">請稍等 <span id="countdown"><?= $countdown ?></span> 秒後重試</p>
+                <script>
+                    var countdownElement = document.getElementById('countdown');
+                    var countdown = <?= $countdown ?>;
+                    var interval = setInterval(function() {
+                        countdown--;
+                        countdownElement.textContent = countdown;
+                        if (countdown <= 0) {
+                            clearInterval(interval);
+                            // 清除錯誤次數並重新導向登入畫面
+                            window.location.href = 'resetErrorTimes.php';
+                        }
+                    }, 1000);
+                </script>
+                
 
             <?php else : ?>
 
