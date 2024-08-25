@@ -29,9 +29,9 @@
       <a class="brand p-3 text-white text-decoration-none">Trivago</a>
       <div class="d-flex align-items-center">
         <p class="h5 ">
-          <span>
+          <!-- <span>
             <?= $_SESSION["user"]["user_name"] . "(" . $_SESSION["user"]["account"] . ")" ?>
-          </span> 您好
+          </span> 您好 -->
         </p>
         <a href="doLogout.php" class="btn btn-dark ms-3 me-3"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
       </div>
