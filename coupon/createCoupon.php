@@ -134,9 +134,8 @@ require_once("../db_connect.php");
                                 </div>
                             </div>
                             <div class="col-6 form-floating pb-3" hidden>
-                                <select class="form-select" id="coupon_state" placeholder="coupon_state" name="coupon_state">
-                                    <option value="1">啟用</option>
-                                    <option value="2">停用</option>
+                                <select class="form-select" id="coupon_state" name="coupon_state">
+                                    <option value="1" selected>啟用</option>
                                 </select>
                                 <label for="coupon_state">優惠券狀態</label>
                             </div>

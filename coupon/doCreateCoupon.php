@@ -35,10 +35,11 @@ $coupon_startDate = $_POST["coupon_startDate"];
 $coupon_endDate = $_POST["coupon_endDate"];
 $product_id = $_POST["product_id"];
 $coupon_specifyDate = $_POST["coupon_specifyDate"];
+$coupon_state = $_POST["coupon_state"];
 $today = date('Y-m-d H:i:s');
 
-$sql = "INSERT INTO coupon (coupon_sid, coupon_name,coupon_info, coupon_rewardType, coupon_lowPrice, coupon_maxUse, coupon_mode, coupon_amount, coupon_send, coupon_startDate, coupon_endDate, product_id, coupon_specifyDate,coupon_createAt,valid)
-	VALUES ('$coupon_sid','$coupon_name','$coupon_info', '$coupon_rewardType', '$coupon_lowPrice', '$coupon_maxUse', '$coupon_mode', '$coupon_amount', '$coupon_send', '$coupon_startDate', '$coupon_endDate', '$product_id', '$coupon_specifyDate', '$today',1)";
+$sql = "INSERT INTO coupon (coupon_sid, coupon_name,coupon_info, coupon_rewardType, coupon_lowPrice, coupon_maxUse, coupon_mode, coupon_amount, coupon_send, coupon_startDate, coupon_endDate, product_id, coupon_specifyDate, coupon_state,coupon_createAt,valid)
+	VALUES ('$coupon_sid','$coupon_name','$coupon_info', '$coupon_rewardType', '$coupon_lowPrice', '$coupon_maxUse', '$coupon_mode', '$coupon_amount', '$coupon_send', '$coupon_startDate', '$coupon_endDate', '$product_id', '$coupon_specifyDate', '$coupon_state' ,'$today',1)";
 
 echo $sql;
 
