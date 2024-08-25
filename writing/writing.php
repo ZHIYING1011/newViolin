@@ -24,16 +24,17 @@ include "../template_nav.php";?>
 </head>
 
 <body>
-    <div class="container my-4">
+    <main class="main-content pb-3">
+    <div class="">
         <h3>文章&部落格管理</h3>
         <div class="mt-3 card text-center">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
+                    <li class="nav-item tabcss" role="presentation">
                         <button class="nav-link active" id="article-tab" data-bs-toggle="tab" data-bs-target="#article"
                             type="button" role="tab" aria-controls="article" aria-selected="true">文章列表</button>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    <li class="nav-item tabcss" role="presentation">
                         <button class="nav-link" id="blog-tab" data-bs-toggle="tab" data-bs-target="#blog" type="button"
                             role="tab" aria-controls="blog" aria-selected="false">部落格列表</button>
                     </li>
@@ -321,7 +322,7 @@ include "../template_nav.php";?>
             </div>
         </div>
     </div>
-
+    </main>
     <!-- 引入Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- 引入Bootstrap Icons -->
