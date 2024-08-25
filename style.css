@@ -17,6 +17,7 @@
 .left-aside {
   width: var(--aside-width);
   padding-top: var(--top-width);
+  background: var(--aside-bg);
 }
 
 .main-content {

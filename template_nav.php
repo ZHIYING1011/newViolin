@@ -2,7 +2,14 @@
   :root {
     --aside-width: 240px;
     --top-width: 72px;
+    --aside-bg: #2D2116;
     --active-btn: #B7785F;
+  }
+
+  .left-aside {
+    width: var(--aside-width);
+    padding-top: var(--top-width);
+    background: var(--aside-bg);
   }
 
   .nav-item {
@@ -15,8 +22,11 @@
     background: var(--active-btn);
     border-color: var(--active-btn);
   }
-</style>
 
+  a {
+    text-decoration: none;
+  }
+</style>
 
 
 <aside class="left-aside border-end vh-100 position-fixed top-0 start-0 overflow-auto">
