@@ -90,9 +90,9 @@ include "../template_btm.php";
                         </div>
                         <div class="col-6 form-floating pb-3">
                             <select class="form-select" id="coupon_mode" placeholder="coupon_mode" name="coupon_mode" value="<?= $row["coupon_mode"] ?>">
-                                <option value="1">皆可使用</option>
-                                <option value="2">指定商品可使用</option>
-                                <option value="3">指定商品不可使用</option>
+                                <option value="1" <?= $row["coupon_mode"] == 1 ? 'selected' : '' ?>>皆可使用</option>
+                                <option value="2" <?= $row["coupon_mode"] == 2 ? 'selected' : '' ?>>指定商品可使用</option>
+                                <option value="3" <?= $row["coupon_mode"] == 3 ? 'selected' : '' ?>>指定商品不可使用</option>
                             </select>
                             <label for="coupon_mode"><span class="text-danger">*</span>活動併用方式</label>
                         </div>
@@ -136,7 +136,7 @@ include "../template_btm.php";
                         </div>
                         <div class="col-6  d-flex gap-2 align-items-center pb-3">
                             <div class="form-floating col-10">
-                                <input type="date" class="form-control" name="coupon_specifyDate" id="coupon_specifyDate" value="">
+                                <input type="date" class="form-control" name="coupon_specifyDate" id="coupon_specifyDate" value="<?= $row["coupon_specifyDate"] ?>">
                                 <label for="coupon_specifyDate">自動發送時間</label>
                             </div>
                             <div class="form-check col-2">
@@ -146,13 +146,13 @@ include "../template_btm.php";
                                 </label>
                             </div>
                         </div>
-                        <div class="col-6 form-floating pb-3">
+                        <!-- <div class="col-6 form-floating pb-3">
                             <select class="form-select" id="coupon_state" placeholder="coupon_state" name="coupon_state" value="<?= $row["coupon_state"] ?>">
-                                <option value="1">啟用</option>
-                                <option value="2">停用</option>
+                                <option value="1" <?= $row["coupon_state"] == 1 ? 'selected' : '' ?>>啟用</option>
+                                <option value="2" <?= $row["coupon_state"] == 2 ? 'selected' : '' ?>>停用</option>
                             </select>
-                            <label for="coupon_mode"><span class="text-danger">*</span>活動併用方式</label>
-                        </div>
+                            <label for="coupon_state"><span class="text-danger">*</span>優惠券狀態</label>
+                        </div> -->
                     </div>
                     <div class="d-flex justify-content-center pt-3 gap-3">
                         <button class="btn btn-primary" type="submit">送出</button>
@@ -172,6 +172,7 @@ include "../template_btm.php";
     const coupon_specifyDate = document.getElementById("coupon_specifyDate");
     const couponSpecifyDateCheckbox = document.getElementById("couponSpecifyDateCheckbox");
     //發放數量
+
     unlimitedCheckbox.addEventListener('change', function() {
         if (this.checked) {
             coupon_amount.value = '無上限';

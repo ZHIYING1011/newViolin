@@ -16,7 +16,7 @@ $coupon_startDate = $_POST["coupon_startDate"];
 $coupon_endDate = $_POST["coupon_endDate"];
 $product_id = $_POST["product_id"];
 $coupon_specifyDate = $_POST["coupon_specifyDate"];
-$coupon_state = $_POST["coupon_state"];
+// $coupon_state = $_POST["coupon_state"];
 
 $sql = "UPDATE coupon SET
 coupon_info='$coupon_info', 
@@ -30,7 +30,7 @@ coupon_startDate='$coupon_startDate',
 coupon_endDate='$coupon_endDate', 
 product_id='$product_id', 
 coupon_specifyDate='$coupon_specifyDate'
-coupon_state='$coupon_state'
+-- coupon_state='$coupon_state'
 WHERE id=$id";
 
 

@@ -23,6 +23,11 @@ require_once("../db_connect.php");
 </head>
 
 <body>
+    <style>
+        .errorTip {
+            border-color: #F00;
+        }
+    </style>
     <main class="main-content pb-3 px-5">
         <div class="pt-3">
             <div class="p-3 bg-white shadow rounded-2 mb-4 border">
@@ -35,7 +40,7 @@ require_once("../db_connect.php");
                     </div>
                 </div>
                 <div class="py-2">
-                    <form action="doCreateCoupon.php" method="post">
+                    <form action="doCreateCoupon.php" method="post" onsubmit="return cheakF()">
                         <div class="row g-2">
                             <div class="col-6 form-floating pb-3">
                                 <input class="form-control" id="coupon_sid" placeholder="coupon_sid" name="coupon_sid">
@@ -97,6 +102,31 @@ require_once("../db_connect.php");
                                 <input type="date" class="form-control" name="coupon_endDate" value="" id="coupon_endDate">
                                 <label for="coupon_endDate">有效結束日期</label>
                             </div>
+                            <!-- 無上限使用期 -->
+                            <!-- <div class="col-6  d-flex gap-2 align-items-center pb-3">
+                                <div class="form-floating col-10">
+                                    <input type="date" class="form-control" name="coupon_startDate" value="" id="coupon_startDate" placeholder="">
+                                    <label for="coupon_startDate">有效開始日期</label>
+                                </div>
+                                <div class="form-check col-2">
+                                    <label for="unlimitedStartDate">
+                                        <input type="checkbox" id="unlimitedStartDate" name="unlimitedStartDate">
+                                        無上限
+                                    </label>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-6  d-flex gap-2 align-items-center pb-3">
+                                <div class="form-floating col-10">
+                                    <input type="date" class="form-control" name="coupon_endDate" value="" id="coupon_endDate">
+                                    <label for="coupon_endDate">有效結束日期</label>
+                                </div>
+                                <div class="form-check col-2">
+                                    <label for="unlimitedEndDate">
+                                        <input type="checkbox" id="unlimitedEndDate" name="unlimitedEndDate">
+                                        無上限
+                                    </label>
+                                </div>
+                            </div> -->
                             <div class="col-6  d-flex gap-2 align-items-center pb-3">
                                 <div class="form-floating col-10">
                                     <input class="form-control" type="text" placeholder="coupon_amount" name="coupon_amount" id="coupon_amount">
@@ -134,9 +164,8 @@ require_once("../db_connect.php");
                                 </div>
                             </div>
                             <div class="col-6 form-floating pb-3" hidden>
-                                <select class="form-select" id="coupon_state" placeholder="coupon_state" name="coupon_state">
-                                    <option value="1">啟用</option>
-                                    <option value="2">停用</option>
+                                <select class="form-select" id="coupon_state" name="coupon_state">
+                                    <option value="1" selected>啟用</option>
                                 </select>
                                 <label for="coupon_state">優惠券狀態</label>
                             </div>
@@ -154,6 +183,10 @@ require_once("../db_connect.php");
                 const unlimitedUseCheckbox = document.getElementById("unlimitedUseCheckbox");
                 const coupon_specifyDate = document.getElementById("coupon_specifyDate");
                 const couponSpecifyDateCheckbox = document.getElementById("couponSpecifyDateCheckbox");
+                const coupon_startDate = document.getElementById("coupon_startDate")
+                const unlimitedStartDate = document.getElementById("unlimitedStartDate")
+                const coupon_endDate = document.getElementById("coupon_endDate")
+                const unlimitedEndDate = document.getElementById("unlimitedEndDate")
 
                 // const coupon_sid = document.getElementById("coupon_sid");
                 // const serial = document.getElementById("serial");
@@ -201,7 +234,40 @@ require_once("../db_connect.php");
                     return fmt;
                 }
 
+                function getDOMbyIDAndValue(id) {
+                    let tmp = document.getElementById(id);
+                    if (tmp.value == "") {
+                        tmp.classList.add("errorTip")
+                        return false
+                    }
+                    return true
 
+                }
+
+                function cheakF() {
+                    // console.log("1234567")
+                    // you if in this
+                    let f = true;
+                    if (!getDOMbyIDAndValue("coupon_sid")) {
+                        //alert("優惠券序號不能為空")
+                        f = false;
+                    }
+                    if (!getDOMbyIDAndValue("coupon_name")) {
+                        //alert("優惠券名稱不能為空")
+                        f = false;
+                    }
+                    // if (getDOMbyIDAndValue("coupon_send") == "0") {
+                    //     alert("請選擇發放方式")
+                    //     return false;
+                    // }
+                    // option的value是否要再設置一個0(請選擇？？)
+                    if (!getDOMbyIDAndValue("coupon_lowPrice")) {
+                        //alert("請輸入發放門檻(最低消費)")
+                        f = false;
+                    }
+                    console.log(f)
+                    return f;
+                }
                 //發放數量
                 unlimitedCheckbox.addEventListener('change', function() {
                     if (this.checked) {
@@ -226,6 +292,19 @@ require_once("../db_connect.php");
                         coupon_maxUse.classList.remove('unlimitedUse-input');
                     }
                 });
+                //有效開始日期無上限
+                // unlimitedStartDate.addEventListener('change', function() {
+                //     if (this.checked) {
+                //         coupon_startDate.value = '';
+                //         coupon_startDate.readOnly = true;
+                //         coupon_startDate.classList.add('startDate-input');
+                //         coupon_startDate.placeholder = '無使用期限'
+                //     } else {
+                //         coupon_startDate.value = '';
+                //         coupon_startDate.readOnly = false;
+                //         coupon_startDate.classList.remove('startDate-input');
+                //     }
+                // });
                 //指定時間
                 couponSpecifyDateCheckbox.addEventListener('change', function() {
                     if (this.checked) {

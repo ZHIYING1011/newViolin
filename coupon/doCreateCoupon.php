@@ -24,6 +24,11 @@ if (empty($coupon_name)) {
     echo "名稱不能為空";
     exit;
 }
+
+$coupon_startDate = $_POST["coupon_startDate"];
+if (empty($coupon_startDate)) {
+    $coupon_startDate = null;
+}
 $coupon_info = $_POST["coupon_info"];
 $coupon_rewardType = $_POST["coupon_rewardType"];
 $coupon_lowPrice = $_POST["coupon_lowPrice"];
@@ -31,14 +36,14 @@ $coupon_maxUse = $_POST["coupon_maxUse"] ?? -1;
 $coupon_mode = $_POST["coupon_mode"];
 $coupon_amount = $_POST["coupon_amount"] ?? -1;
 $coupon_send = $_POST["coupon_send"];
-$coupon_startDate = $_POST["coupon_startDate"];
 $coupon_endDate = $_POST["coupon_endDate"];
 $product_id = $_POST["product_id"];
 $coupon_specifyDate = $_POST["coupon_specifyDate"];
+$coupon_state = $_POST["coupon_state"];
 $today = date('Y-m-d H:i:s');
 
-$sql = "INSERT INTO coupon (coupon_sid, coupon_name,coupon_info, coupon_rewardType, coupon_lowPrice, coupon_maxUse, coupon_mode, coupon_amount, coupon_send, coupon_startDate, coupon_endDate, product_id, coupon_specifyDate,coupon_createAt,valid)
-	VALUES ('$coupon_sid','$coupon_name','$coupon_info', '$coupon_rewardType', '$coupon_lowPrice', '$coupon_maxUse', '$coupon_mode', '$coupon_amount', '$coupon_send', '$coupon_startDate', '$coupon_endDate', '$product_id', '$coupon_specifyDate', '$today',1)";
+$sql = "INSERT INTO coupon (coupon_sid, coupon_name,coupon_info, coupon_rewardType, coupon_lowPrice, coupon_maxUse, coupon_mode, coupon_amount, coupon_send, coupon_startDate, coupon_endDate, product_id, coupon_specifyDate, coupon_state,coupon_createAt,valid)
+	VALUES ('$coupon_sid','$coupon_name','$coupon_info', '$coupon_rewardType', '$coupon_lowPrice', '$coupon_maxUse', '$coupon_mode', '$coupon_amount', '$coupon_send', '$coupon_startDate', '$coupon_endDate', '$product_id', '$coupon_specifyDate', '$coupon_state' ,'$today',1)";
 
 echo $sql;
 

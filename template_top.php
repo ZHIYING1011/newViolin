@@ -27,13 +27,14 @@
   <div class="ps-md-3 ps-lg-5 mt-3 me-5">
     <header class="main-header d-flex justify-content-between bg-white align-items-center fixed-top shadow-sm">
       <a class="brand p-3 text-white text-decoration-none">Trivago</a>
-      <div class="d-flex align-items-center">
+      <!-- 跑版先註解 -->
+      <!-- <div class="d-flex align-items-center">
         <p class="h5 ">
           <span>
             <?= $_SESSION["user"]["user_name"] . "(" . $_SESSION["user"]["account"] . ")" ?>
           </span> 您好
         </p>
         <a href="doLogout.php" class="btn btn-dark ms-3 me-3"><i class="fa-solid fa-right-from-bracket me-2 fa-fw"></i>登出</a>
-      </div>
+      </div> -->
     </header>
-    <!-- <h1><?= $pageTitle ?></h1> -->
+    <h1><?= $pageTitle ?></h1>

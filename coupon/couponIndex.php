@@ -28,8 +28,6 @@ $result = $conn->query($sql);
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
-<!-- modal 載入資料 -->
-
 
 <head>
   <title>couponIndex</title>
@@ -41,8 +39,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../style.css">
-
 </head>
+
 
 <body>
   <main class="main-content pb-3">
@@ -109,7 +107,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                 <th>優惠券序號</th>
                 <th>優惠券名稱</th>
                 <th>數量</th>
-                <th>發放方式</th>
+                <!-- <th>發放方式</th> -->
                 <th>最低消費</th>
                 <th>折抵類別</th>
                 <!-- <th>折抵</th> -->
@@ -163,7 +161,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
   const coupon_startDate = document.getElementById("coupon_startDate");
   const coupon_endDate = document.getElementById("coupon_endDate");
   <?php
-  $sql = "SELECT * FROM coupon ORDER BY id ASC";
+  $sql = "SELECT * FROM coupon WHERE valid != 0 ORDER BY id ASC ";
   $result = $conn->query($sql);
   $rows = json_encode($result->fetch_all(MYSQLI_ASSOC));
   ?>
@@ -280,7 +278,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
       let amount = i.coupon_amount == -1 ? "無上限" : i.coupon_amount
       let maxUse = i.coupon_maxUse == -1 ? "無上限" : i.coupon_maxUse
       newtr.appendChild(addTd(`發放數量: ${amount}<br>使用次數上限: ${maxUse}`));
-      newtr.appendChild(addTd(sendInt[i.coupon_send]));
+      // newtr.appendChild(addTd(sendInt[i.coupon_send]));
       newtr.appendChild(addTd(i.coupon_lowPrice));
       newtr.appendChild(addTd(rewardTypeInt[i.coupon_rewardType]));
       newtr.appendChild(addTd(`${i.coupon_startDate}~<br>${i.coupon_endDate}`));
@@ -335,8 +333,12 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
       let trash = document.createElement('a');
       trash.classList.add("fa-solid")
       trash.classList.add("fa-trash")
-      trash.href = "you url"
       trash.style.textDecoration = "none";
+      trash.href = `./couponDelet.php?id=${i.id}`;
+      trash.addEventListener('click', async function() {
+        this.location = `./couponDelet.php?id=${i.id}`;
+        console.log(this.location)
+      })
 
       editDOM.appendChild(edit)
       editDOM.appendChild(eye)
