@@ -14,6 +14,7 @@ include "../template_nav.php";?>
     <title>文章&部落格管理</title>
     <?php include("./css.php") ?>
     <?php include("./writingCatch.php") ?>
+    <link rel="stylesheet" href="../style.css">
     <style>
         a {
             text-decoration: none;
