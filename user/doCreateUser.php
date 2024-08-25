@@ -73,7 +73,7 @@ $create_date = date('Y-m-d H:i:s');
 
 
 $sql = "INSERT INTO `users`( `user_name`, `user_type`, `level_id`, `account`, `password`, `phone`, `email`, `birthday`, `gender`, `address_city_id`, `address_cityarea_id`, `address_street`, `create_date`, `valid`) 
-VALUES ('$user_name',2,3, '$account','$password',  '$phone', '$email', '$birthday', '$gender','$address_city_id','$address_cityarea_id','$address_street','$create_date', 1)";
+VALUES ('$user_name',2,3, '$account','$password',  '$phone', '$email', '$birthday', '$gender','$address_city_id','$address_cityarea_id','$address_street','$create_date', Y)";
 
 
 if ($conn->query($sql) === TRUE) {

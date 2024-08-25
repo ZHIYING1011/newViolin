@@ -1,11 +1,11 @@
 <?php
 
 // 整合頁面
-include "../vars.php";
-$cateNum = 1;
-$pageTitle = "{$cate_ary[$cateNum]}";
-include "../template_top.php";
-include "../template_nav.php";
+// include "../vars.php";
+// $cateNum = 1;
+// $pageTitle = "{$cate_ary[$cateNum]}";
+// include "../template_top.php";
+// include "../template_nav.php";
 
 if (!isset($_GET["id"])) {
     echo "請正確帶入 get id 變數";
@@ -49,7 +49,7 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-    <title>會員管理/檢視</title>
+    <title>使用者管理/檢視</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -59,45 +59,60 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
-    <main class="main-content pb-3">
+    <!-- <main class="main-content pb-3"> -->
         <div class="container">
-
-            <div class="d-flex">
-                <a href="users.php" class="btn btn-dark">返回列表</a>
-                <h1>會員管理/檢視</h1>
-            </div>
 
             <?php
             $valid_class = '';
             $valid_content = '';
             switch ($user["valid"]) {
-                case '0':
+                case 'N':
                     $valid_class = 'bg-danger';
                     $valid_content = '已停用';
                     break;
-                case '1':
+                case 'Y':
                     $valid_class = 'bg-success';
                     $valid_content = '啟用中';
                     break;
             }
             ?>
-            <p class="h3"><?= $title ?><span class="ms-1 badge <?= $valid_class ?>"> <?= $valid_content ?></span></p>
+            <p class="h3"><?= $title ?><span class="ms-3 badge <?= $valid_class ?>"> <?= $valid_content ?></span></p>
 
 
             <?php if ($userCount > 0) : ?>
                 <form action="doEditUser.php" method="post" class="searchbar row g-3">
 
-                    <!-- 會員ID -->
+                    <!-- 使用者ID -->
                     <input type="hidden" name="id" value="<?= $user['id'] ?>">
 
-                    <!-- 會員名稱 -->
-                    <div class="col-3 mb-3">
-                        <label for="user_name" class="form-label">會員名稱</label>
+                    <!-- 使用者名稱 -->
+                    <div class="col-6 mb-3">
+                        <label for="user_name" class="form-label">使用者名稱</label>
                         <p class="form-label text-primary"><?= $user['user_name'] ?></p>
                     </div>
 
+                    
+
+                    <!-- 使用者帳號 -->
+                    <div class="col-6 mb-3">
+                        <label for="account" class="form-label">使用者帳號<span class="text-danger">*帳號註冊後無法修改！</span></label>
+                        <p class="form-label text-primary"><?= $user['account'] ?></p>
+                    </div>
+
+                    <!-- 使用者電話 -->
+                    <div class="col-6 mb-3">
+                        <label for="phone" class="form-label">使用者電話</label>
+                        <p class="form-label text-primary"><?= "0" . $user['phone'] ?></p>
+                    </div>
+
+                    <!-- 使用者信箱 -->
+                    <div class="col-6 mb-3">
+                        <label for="email" class="form-label">使用者信箱</label>
+                        <p class="form-label text-primary"><?= $user['email'] ?></p>
+                    </div>
+
                     <!-- 性別 -->
-                    <div class="col-3 mb-3">
+                    <div class="col-6 mb-3">
                         <label for="gender" class="form-label">性別</label>
                         <?php
                         $gender = '';
@@ -111,64 +126,44 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
                             default:
                                 $gender = '未填寫';
                         } ?>
-
                         <p class="form-label text-primary"><?= $gender ?></p>
                     </div>
-
-                    <!-- 會員帳號 -->
-                    <div class="col-3 mb-3">
-                        <label for="account" class="form-label">會員帳號<span class="text-danger">*帳號註冊後無法修改！</span></label>
-                        <p class="form-label text-primary"><?= $user['account'] ?></p>
-                    </div>
-
-                    <!-- 會員電話 -->
-                    <div class="col-3 mb-3">
-                        <label for="phone" class="form-label">會員電話</label>
-                        <p class="form-label text-primary"><?= "0" . $user['phone'] ?></p>
-                    </div>
-
-                    <!-- 會員信箱 -->
-                    <div class="col-3 mb-3">
-                        <label for="email" class="form-label">會員信箱</label>
-                        <p class="form-label text-primary"><?= $user['email'] ?></p>
-                    </div>
-
                     <!-- 生日 -->
-                    <div class="col-3 mb-3">
+                    <div class="col-6 mb-3">
                         <label for="birthday" class="form-label">生日</label>
                         <p class="form-label text-primary"><?= $user['birthday'] ?></p>
                     </div>
 
                     <!-- 地址 -->
-                    <div class="col-6 mb-3">
+                    <div class="col-12 mb-3">
                         <label for="address" class="form-label">地址</label>
                         <p class="form-label text-primary"><?= $user['address_city_name'] . $user['address_cityarea_name'] . $user['address_street'] ?></p>
 
                     </div>
 
                     <!-- 創建時間 -->
-                    <div class="col-3 mb-3">
+                    <div class="col-6 mb-3">
                         <p class="form-label">創建時間</p>
                         <p class="form-label text-primary"><?= $user['create_date'] ?></p>
                     </div>
 
                     <!-- 更新時間 -->
-                    <div class="col-3 mb-3">
+                    <div class="col-6 mb-3">
                         <p class="form-label">更新時間</p>
                         <p class="form-label text-primary"><?= $user['update_time'] ?></p>
                     </div>
 
                     <!-- 帳號狀態 -->
-                    <div class="col-3 mb-3">
+                    <div class="col-6 mb-3">
 
                         <label for="valid" class="form-label">帳號狀態</label>
                         <?php
                         $valid = '';
                         switch ($user["valid"]) {
-                            case '0':
+                            case 'N':
                                 $valid = '停用';
                                 break;
-                            case '1':
+                            case 'Y':
                                 $valid = '啟用';
                                 break;
                             default:
@@ -177,10 +172,6 @@ $CityAreaList = $resultCityArea->fetch_all(MYSQLI_ASSOC);
                         <p class="form-label text-primary"><?= $valid ?></p>
                     </div>
 
-                    <!-- 按鈕 -->
-                    <div class="col-12">
-                        <a href="users.php" class="btn btn-dark">返回</a>
-                    </div>
                 </form>
             <?php else : ?>
                 使用者不存在
