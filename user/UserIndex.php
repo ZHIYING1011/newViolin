@@ -1,6 +1,6 @@
 <?php
 include "../vars.php";
-$cateNum = 0;
+$cateNum = 1;
 $pageTitle = "{$cate_ary[$cateNum]}";
 include "../template_top.php";
 include "../template_nav.php";

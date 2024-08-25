@@ -1,9 +1,10 @@
 <?php
 include "../vars.php";
-$cateNum = 4;
+$cateNum = 5;
 $pageTitle = "{$cate_ary[$cateNum]}";
 include "../template_top.php";
-include "../template_nav.php";?>
+include "../template_nav.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +13,8 @@ include "../template_nav.php";?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章&部落格管理</title>
-    <?php include("./css.php") ?>
     <?php include("./writingCatch.php") ?>
+    <link rel="stylesheet" href="../style.css">
     <style>
         a {
             text-decoration: none;
@@ -326,77 +327,77 @@ include "../template_nav.php";?>
     <!-- 引入Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 获取 URL 中的参数
-    const urlParams = new URLSearchParams(window.location.search);
-    const activeTab = urlParams.get('tab') || 'article'; // 默认显示 'article' 标签页
-    const searchArticleTitle = urlParams.get('searchArticleTitle') || '';
-    const searchBlogTitle = urlParams.get('searchBlogTitle') || '';
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取 URL 中的参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeTab = urlParams.get('tab') || 'article'; // 默认显示 'article' 标签页
+            const searchArticleTitle = urlParams.get('searchArticleTitle') || '';
+            const searchBlogTitle = urlParams.get('searchBlogTitle') || '';
 
-    // 激活正确的标签页
-    const tabTrigger = document.querySelector(`#${activeTab}-tab`);
-    if (tabTrigger) {
-        const tab = new bootstrap.Tab(tabTrigger);
-        tab.show();
-    }
-
-    // 监听标签切换事件
-    const tabList = document.querySelectorAll('.nav-tabs .nav-link');
-    tabList.forEach(tab => {
-        tab.addEventListener('click', function(event) {
-            const tabId = this.getAttribute('id').replace('-tab', '');
-            const newUrl = new URL(window.location.href);
-            newUrl.searchParams.set('tab', tabId);
-
-            // 移除不相关的分页参数
-            if (tabId === 'article') {
-                newUrl.searchParams.delete('pBlog');
-            } else if (tabId === 'blog') {
-                newUrl.searchParams.delete('pArticle');
+            // 激活正确的标签页
+            const tabTrigger = document.querySelector(`#${activeTab}-tab`);
+            if (tabTrigger) {
+                const tab = new bootstrap.Tab(tabTrigger);
+                tab.show();
             }
 
-            // 更新 URL
-            window.history.pushState({}, '', newUrl);
+            // 监听标签切换事件
+            const tabList = document.querySelectorAll('.nav-tabs .nav-link');
+            tabList.forEach(tab => {
+                tab.addEventListener('click', function(event) {
+                    const tabId = this.getAttribute('id').replace('-tab', '');
+                    const newUrl = new URL(window.location.href);
+                    newUrl.searchParams.set('tab', tabId);
+
+                    // 移除不相关的分页参数
+                    if (tabId === 'article') {
+                        newUrl.searchParams.delete('pBlog');
+                    } else if (tabId === 'blog') {
+                        newUrl.searchParams.delete('pArticle');
+                    }
+
+                    // 更新 URL
+                    window.history.pushState({}, '', newUrl);
+                });
+            });
+
+            // 处理分页链接的点击事件
+            var pageLinks = document.querySelectorAll('.pagination .page-link');
+            pageLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // 防止默认行为
+                    const page = this.getAttribute('href').split(/pArticle=|pBlog=/)[1];
+                    const tab = urlParams.get('tab') || 'article';
+                    const currentUrl = new URL(window.location.href);
+                    currentUrl.searchParams.set('tab', tab);
+                    if (tab === 'article') {
+                        currentUrl.searchParams.set('pArticle', page);
+                    } else {
+                        currentUrl.searchParams.set('pBlog', page);
+                    }
+                    if (searchArticleTitle) {
+                        currentUrl.searchParams.set('searchArticleTitle', searchArticleTitle);
+                    }
+                    if (searchBlogTitle) {
+                        currentUrl.searchParams.set('searchBlogTitle', searchBlogTitle);
+                    }
+                    window.location.href = currentUrl;
+                });
+            });
+
+            // 处理删除链接
+            const deleteLinks = document.querySelectorAll('.delete-link');
+            deleteLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    const confirmed = confirm('確定要刪除嗎？');
+                    if (!confirmed) {
+                        event.preventDefault(); // 取消默认行为
+                        return false; // 阻止链接跳转
+                    }
+                });
+            });
         });
-    });
-
-    // 处理分页链接的点击事件
-    var pageLinks = document.querySelectorAll('.pagination .page-link');
-    pageLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // 防止默认行为
-            const page = this.getAttribute('href').split(/pArticle=|pBlog=/)[1];
-            const tab = urlParams.get('tab') || 'article';
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set('tab', tab);
-            if (tab === 'article') {
-                currentUrl.searchParams.set('pArticle', page);
-            } else {
-                currentUrl.searchParams.set('pBlog', page);
-            }
-            if (searchArticleTitle) {
-                currentUrl.searchParams.set('searchArticleTitle', searchArticleTitle);
-            }
-            if (searchBlogTitle) {
-                currentUrl.searchParams.set('searchBlogTitle', searchBlogTitle);
-            }
-            window.location.href = currentUrl;
-        });
-    });
-
-    // 处理删除链接
-    const deleteLinks = document.querySelectorAll('.delete-link');
-    deleteLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            const confirmed = confirm('確定要刪除嗎？');
-            if (!confirmed) {
-                event.preventDefault(); // 取消默认行为
-                return false; // 阻止链接跳转
-            }
-        });
-    });
-});
-</script>
+    </script>
 
 </body>
 
