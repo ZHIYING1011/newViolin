@@ -48,4 +48,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+    .tabcss{
+        background-color: #f8f8f8;
+    }
 </style>
