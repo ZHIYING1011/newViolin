@@ -1,4 +1,10 @@
 <?php
+include "../vars.php";
+$cateNum = 5;
+$pageTitle = "{$cate_ary[$cateNum]}";
+include "../template_top.php";
+include "../template_nav.php"; ?>
+<?php
 if (!isset($_GET["id"])) {
     echo "請正確帶入文章的 get id 變數";
     exit;
@@ -35,7 +41,8 @@ if ($articleCount > 0) {
 </head>
 
 <body>
-    <div class="container my-4">
+    <main class="main-content pb-3">
+    <div class="pt-3">
         <div>
             <button class="btn btn-primary" onclick="window.history.back()">
                 <i class="fa-solid fa-angle-left"></i>
@@ -54,7 +61,7 @@ if ($articleCount > 0) {
         <?php endif; ?>
 
     </div>
-
+</main>
     <!-- 引入Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- 引入Bootstrap Icons -->

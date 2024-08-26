@@ -25,7 +25,7 @@ include "../template_nav.php"; ?>
 
 <body>
     <main class="main-content pb-3">
-        <div class="">
+        <div class="pt-3">
             <h3 class="">文章&部落格管理</h3>
             <div class="mt-3 card text-center">
                 <div class="card-header">

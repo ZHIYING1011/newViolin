@@ -1,4 +1,11 @@
 <?php
+include "../vars.php";
+$cateNum = 5;
+$pageTitle = "{$cate_ary[$cateNum]}";
+include "../template_top.php";
+include "../template_nav.php"; ?>
+
+<?php
 if (!isset($_GET["id"])) {
     echo "請正確帶入文章的 get id 變數";
     exit;
@@ -32,49 +39,51 @@ if ($articleCount > 0) {
 </head>
 
 <body>
-    <div class="container my-4">
-        <div class="">
+    <main class="main-content pb-3">
+        <div class="pt-3">
+            <div class="">
 
-            <button class="btn btn-primary" onclick="confirmBack()">
-                <i class="fa-solid fa-angle-left"></i>
-                返回上一頁
-            </button>
+                <button class="btn btn-primary" onclick="confirmBack()">
+                    <i class="fa-solid fa-angle-left"></i>
+                    返回上一頁
+                </button>
+
+            </div>
+            <h3 class="mt-3 mb-3">編輯文章</h3>
+            <?php if ($articleCount > 0): ?>
+                <form action="doUpdateArticle.php" method="post">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <table class="table table-borderless">
+                                <input type="hidden" name="id" value="<?= $row["id"] ?>">
+                                <tr>
+                                    <th class="col-1">標題</th>
+                                    <td><input type="text" class="form-control" name="title" value="<?= $row["title"] ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th class="col-1">類別</th>
+                                    <td><input type="text" class="form-control" name="category" value="<?= $row["category"] ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th class="col-1">內容</th>
+                                    <td><textarea type="text" class="form-control" name="content" rows="8"><?= $row["content"] ?></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mt-3 mb-3 d-flex justify-content-end">
+                        <!-- <input name="posted_at" type="text" id="timePicker" value=""> -->
+                        <!-- <button class="btn btn-outline-primary ms-1" type="submit" name="action" value="scheduled">設定排程</button> -->
+                        <button class="btn btn-outline-primary ms-3" type="submit" name="action" value="save">儲存</button>
+                        <button class="btn btn-primary ms-3" type="submit" name="action" value="visible">立即發佈</button>
+                    </div>
+
+
+                </form>
+            <?php endif; ?>
 
         </div>
-        <h3 class="mt-3 mb-3">編輯文章</h3>
-        <?php if ($articleCount > 0): ?>
-            <form action="doUpdateArticle.php" method="post">
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <table class="table table-borderless">
-                            <input type="hidden" name="id" value="<?= $row["id"] ?>">
-                            <tr>
-                                <th class="col-1">標題</th>
-                                <td><input type="text" class="form-control" name="title" value="<?= $row["title"] ?>"></td>
-                            </tr>
-                            <tr>
-                                <th class="col-1">類別</th>
-                                <td><input type="text" class="form-control" name="category" value="<?= $row["category"] ?>"></td>
-                            </tr>
-                            <tr>
-                                <th class="col-1">內容</th>
-                                <td><textarea type="text" class="form-control" name="content" rows="8"><?= $row["content"] ?></textarea></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="mt-3 mb-3 d-flex justify-content-end">
-                    <!-- <input name="posted_at" type="text" id="timePicker" value=""> -->
-                    <!-- <button class="btn btn-outline-primary ms-1" type="submit" name="action" value="scheduled">設定排程</button> -->
-                    <button class="btn btn-outline-primary ms-3" type="submit" name="action" value="save">儲存</button>
-                    <button class="btn btn-primary ms-3" type="submit" name="action" value="visible">立即發佈</button>
-                </div>
-
-
-            </form>
-        <?php endif; ?>
-
-    </div>
+    </main>
 
     <!-- 引入Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

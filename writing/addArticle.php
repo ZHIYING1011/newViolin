@@ -1,3 +1,10 @@
+<?php
+include "../vars.php";
+$cateNum = 5;
+$pageTitle = "{$cate_ary[$cateNum]}";
+include "../template_top.php";
+include "../template_nav.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,40 +16,41 @@
 </head>
 
 <body>
-    <div class="container my-4">
-        <div class="">
-            <button class="btn btn-primary" onclick="confirmBack()">
-                <i class="fa-solid fa-angle-left"></i>
-                返回上一頁
-            </button>
-        </div>
-        <h3 class="mt-3 mb-3">新增文章</h3>
-        <form action="doAddArticle.php" method="post">
-            <div class="form-floating mb-3">
-                <input type="text" name="title" class="form-control">
-                <label for="floating"><span class="text-danger">*</span>標題</label>
+    <main class="main-content pb-3">
+        <div class="pt-3">
+            <div class="">
+                <button class="btn btn-primary" onclick="confirmBack()">
+                    <i class="fa-solid fa-angle-left"></i>
+                    返回上一頁
+                </button>
             </div>
-            <div class="form-floating mb-3">
-                <!-- <div class="input-group-text">類別</div> -->
-                <input type="text" name="category" class="form-control">
-                <label for="floating">類別</label>
-            </div>
-            <div class="mb-3">
-                <textarea type="text" name="content" class="form-control" placeholder="請輸入內容" rows="8"></textarea>
-            </div>
-            <!-- <div class="mb-3 d-flex justify-content-end">
+            <h3 class="mt-3 mb-3">新增文章</h3>
+            <form action="doAddArticle.php" method="post">
+                <div class="form-floating mb-3">
+                    <input type="text" name="title" class="form-control">
+                    <label for="floating"><span class="text-danger">*</span>標題</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <!-- <div class="input-group-text">類別</div> -->
+                    <input type="text" name="category" class="form-control">
+                    <label for="floating">類別</label>
+                </div>
+                <div class="mb-3">
+                    <textarea type="text" name="content" class="form-control" placeholder="請輸入內容" rows="8"></textarea>
+                </div>
+                <!-- <div class="mb-3 d-flex justify-content-end">
                 <button class="btn btn-secondary ms-3" type="submit" name="action" value="draft">儲存為草稿</button>
             </div> -->
-            <div class="mb-3 d-flex justify-content-end">
-                <!-- <input name="posted_at" type="text" id="timePicker" placeholder="選擇日期與時間" value="2024-08-16 23:03">
+                <div class="mb-3 d-flex justify-content-end">
+                    <!-- <input name="posted_at" type="text" id="timePicker" placeholder="選擇日期與時間" value="2024-08-16 23:03">
                 <button class="btn btn-outline-primary ms-1" type="submit" name="action" value="scheduled">設定排程</button> -->
-                <button class="btn btn-secondary ms-3" type="submit" name="action" value="draft">儲存為草稿</button>
-                <button class="btn btn-primary ms-3" type="submit" name="action" value="visible">立即發佈</button>
-            </div>
-        </form>
+                    <button class="btn btn-secondary ms-3" type="submit" name="action" value="draft">儲存為草稿</button>
+                    <button class="btn btn-primary ms-3" type="submit" name="action" value="visible">立即發佈</button>
+                </div>
+            </form>
 
-    </div>
-
+        </div>
+    </main>
     <!-- 引入Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- 引入Bootstrap Icons -->
