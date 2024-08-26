@@ -8,9 +8,7 @@
 }
 
 .brand {
-  width: var(--aside-width);
   background: var(--aside-bg);
-  width: 239px;
   height: var(--top-width);
 }
 

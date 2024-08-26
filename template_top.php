@@ -19,14 +19,24 @@
   }
   ?>
   <title><?= $pageTitle ?></title>
-  <link rel="stylesheet" href="../style.css ">
+  <link rel="stylesheet" href="../style.css">
 </head>
+<style>
+  .logo {
+    width: auto;
+    height: 60px;
+  }
+</style>
 
 <body>
 
   <div class="ps-md-3 ps-lg-5 mt-3 me-5">
     <header class="main-header d-flex justify-content-between bg-white align-items-center fixed-top shadow-sm">
-      <a class="brand p-3 text-white text-decoration-none">Trivago</a>
+      <div class="brand d-flex justify-content-center align-items-center">
+        <img src="/newViolin/img/logo.png" alt="" class="logo ">
+      </div>
+      <!-- <a class="brand p-3 text-decoration-none"></a> -->
+
       <!-- 跑版先註解 -->
       <!-- <div class="d-flex align-items-center">
         <p class="h5 ">
