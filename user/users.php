@@ -9,11 +9,11 @@ include "../template_nav.php";
 include("../js.php");
 
 // 抓登入資訊
-session_start();
-if (!isset($_SESSION["user"])) {
-    header("location:userLogin.php");
-    exit;
-}
+// session_start();
+// if (!isset($_SESSION["user"])) {
+//     header("location:userLogin.php");
+//     exit;
+// }
 
 require_once("../db_connect.php");
 

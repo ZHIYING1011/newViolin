@@ -26,6 +26,10 @@
     width: auto;
     height: 60px;
   }
+
+  .brand {
+    width: 239px;
+  }
 </style>
 
 <body>

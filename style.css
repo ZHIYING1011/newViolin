@@ -10,6 +10,7 @@
 .brand {
   background: var(--aside-bg);
   height: var(--top-width);
+  width: var(--top-width);
 }
 
 .left-aside {
